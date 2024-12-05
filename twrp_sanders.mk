@@ -12,11 +12,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-# Inherit from aljeter device
-$(call inherit-product, device/motorola/aljeter/device.mk)
+# Inherit from sanders device
+$(call inherit-product, device/motorola/sanders/device.mk)
 
-PRODUCT_DEVICE := aljeter
-PRODUCT_NAME := twrp_aljeter
+PRODUCT_DEVICE := sanders
+PRODUCT_NAME := twrp_sanders
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := moto g(6) play
+PRODUCT_MODEL := moto g(5s) plus
 PRODUCT_MANUFACTURER := motorola
