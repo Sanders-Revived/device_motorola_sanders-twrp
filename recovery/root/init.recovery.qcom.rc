@@ -1,3 +1,8 @@
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    mount_all /etc/recovery.fstab
+
+on post-fs
+    wait /external_sd
+    exec u:root g:root -- /sbin/copy_pstore.sh
