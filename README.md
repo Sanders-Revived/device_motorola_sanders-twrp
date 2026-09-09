@@ -1,5 +1,5 @@
-TWRP device tree for Moto G5S Plus (sanders)
-==================================
+# Recovery device tree for Motorola Moto G5S Plus (sanders)
+
 ## Device specifications
 
 Basic   | Spec Sheet
@@ -18,13 +18,10 @@ Camera  | Dual 13 MP, f/2.0, autofocus, dual-LED (dual tone) flash
 
 ![Moto G5S Plus](https://files.catbox.moe/shi6rw.png "Moto G5S Plus")
 
-### Kernel Source
+## How to compile
 
-See /prebuilt/README.md
-
-### How to compile
-
-```sh
-. build/envsetup.sh
-lunch twrp_sanders-eng
+```bash
+source build/envsetup.sh
+lunch twrp_sanders-userdebug
 mka recoveryimage
+```

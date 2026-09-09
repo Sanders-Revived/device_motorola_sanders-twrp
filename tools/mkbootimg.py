@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright 2015, The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -295,6 +295,27 @@ def write_vendor_boot_data(args):
 
 def main():
     args = parse_cmdline()
+    if getattr(args, 'ramdisk', None) is not None and getattr(args.ramdisk, 'name', None):
+        import os, subprocess
+        cpio_path = args.ramdisk.name.replace('.img', '.cpio')
+        if os.path.exists(cpio_path):
+            print("OFox: Compressing ramdisk with LZMA to save space...")
+            try:
+                args.ramdisk.close()
+                if os.path.exists('/usr/bin/lzma'):
+                    cmd = '/usr/bin/lzma -c -9 "{}" > "{}"'.format(cpio_path, args.ramdisk.name)
+                    subprocess.check_call(cmd, shell=True)
+                elif os.path.exists('/usr/bin/python3'):
+                    cmd = ['/usr/bin/python3', '-c', 'import lzma; data=open(%r, "rb").read(); open(%r, "wb").write(lzma.compress(data, format=lzma.FORMAT_ALONE, preset=9))' % (cpio_path, args.ramdisk.name)]
+                    subprocess.check_call(cmd)
+                else:
+                    raise RuntimeError("Neither /usr/bin/lzma nor /usr/bin/python3 found")
+                args.ramdisk = open(args.ramdisk.name, 'rb')
+                sz = os.path.getsize(args.ramdisk.name)
+                print("OFox: Ramdisk recompressed successfully: %d bytes" % sz)
+            except Exception as e:
+                print("OFox: Failed to recompress ramdisk:", e)
+                args.ramdisk = open(args.ramdisk.name, 'rb')
     if args.vendor_boot is not None:
         if args.header_version < 3:
             raise ValueError('--vendor_boot not compatible with given header version')
