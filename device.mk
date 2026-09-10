@@ -16,3 +16,14 @@ PRODUCT_SOONG_NAMESPACES += \
 # Vibrator AIDL V1 compatibility for the prebuilt Qualcomm service
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator-V1-ndk_platform.so
+
+# Crypto (FBE with ICE inline crypto; keymaster is the AOSP
+# software service, gatekeeper impl loads gatekeeper.msm8953.so)
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
+
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service \
+    android.hardware.keymaster@4.0-service
