@@ -19,10 +19,6 @@
 # Splash
 /logo         emmc          /dev/block/bootdevice/by-name/logo           flags=display="Splash";backup=1;flashimg=1
 
-# Data (FBE with ICE inline crypto, v1 policy, no metadata encryption)
-/dev/block/bootdevice/by-name/userdata                  /data                     f2fs     rw,discard,nosuid,nodev,noatime,nodiratime,nobarrier,inline_data   wait,check,latemount,formattable,fileencryption=ice,quota,reservedsize=128M
-/dev/block/bootdevice/by-name/metadata                  /metadata                 ext4     noatime,nosuid,nodev,discard,sync                                   wait,check,formattable,first_stage_mount
-
 # Removable storage
 /external_sd  auto          /dev/block/mmcblk1p1  /dev/block/mmcblk1     flags=display="MicroSD Card";storage;wipeingui;removable
 /usb_otg      auto          /dev/block/sda1       /dev/block/sda         flags=display="USB-OTG";storage;wipeingui;removable
