@@ -16,4 +16,6 @@ odm                                                     /odm                    
 # Misc
 /dev/block/bootdevice/by-name/misc			/misc			  emmc     defaults                                                                           defaults
 
-/dev/block/bootdevice/by-name/userdata                  /data                     f2fs     rw,discard,nosuid,nodev,noatime,nodiratime,nobarrier,inline_data   wait,check,latemount,formattable,quota,reservedsize=128M
+# Userdata: F2FS preferred, ext4 fallback
+/dev/block/bootdevice/by-name/userdata                  /data                     f2fs     rw,discard,nosuid,nodev,noatime,nodiratime,nobarrier,inline_xattr,inline_data,reserve_root=32768,resgid=1065   wait,check,formattable,latemount,quota,reservedsize=128M
+/dev/block/bootdevice/by-name/userdata                  /data                     ext4     rw,discard,nosuid,nodev,noatime,nodiratime,barrier=1,data=ordered                                      wait,check,formattable,latemount,quota,reservedsize=128M
