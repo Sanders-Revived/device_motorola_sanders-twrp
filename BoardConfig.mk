@@ -93,13 +93,11 @@ TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := false
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 TW_USE_LEGACY_BATTERY_SERVICES := true
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone20/temp"
-TW_EXCLUDE_TWRPAPP := true
 TW_EXCLUDE_APEX := true
 # lpdump/lpdumpd.rc are only pulled in because PRODUCT_USE_DYNAMIC_PARTITIONS
 # is true; TWRP/Fox handle super partitions with their own built-in liblp,
@@ -108,9 +106,6 @@ TW_EXCLUDE_LPDUMP := true
 TW_EXCLUDE_PYTHON := true
 TW_EXCLUDE_NANO := true
 TW_EXCLUDE_BASH := true
-TW_EXCLUDE_TZDATA := true
-TW_EXCLUDE_SUPERSU := true
-TW_INCLUDE_CONFIGFS := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 
 # Brightness (OrangeFox mandatory requirement)
