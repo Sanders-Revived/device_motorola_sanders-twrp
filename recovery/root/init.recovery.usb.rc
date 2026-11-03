@@ -31,7 +31,14 @@ on early-fs && property:ro.boot.usbcontroller=*
 on early-fs && property:ro.boot.usbconfigfs=true
     setprop sys.usb.configfs 1
 
+# The kernel only allows mounting a functionfs instance whose ffs.<name>
+# device exists in configfs (ffs_acquire_dev returns -ENOENT otherwise).
+# init.rc mounts configfs and creates ffs.adb in its own (earlier) "on fs"
+# section, but nobody registers ffs.mtp there - so we must do it here,
+# BEFORE "mount functionfs mtp", or MTP fails with ENOENT ("/dev/usb-ffs/mtp/ep0"
+# is never created and the MTP server dies with errno 2).
 on fs
+    mkdir /config/usb_gadget/g1/functions/ffs.mtp
     mkdir /dev/usb-ffs 0775 shell shell
     mkdir /dev/usb-ffs/adb 0770 shell shell
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000

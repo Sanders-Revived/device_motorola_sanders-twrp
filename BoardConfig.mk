@@ -67,7 +67,7 @@ BOARD_SANDERS_DYNPART_V1_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 41
 BOARD_SANDERS_DYNPART_V1_PARTITION_LIST := system system_ext product vendor odm
 
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -77,7 +77,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 TARGET_BOARD_PLATFORM := msm8953
 
 # Ramdisk
-BOARD_RAMDISK_USE_XZ := true
+BOARD_RAMDISK_USE_LZMA := true
 
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -101,6 +101,10 @@ TW_USE_LEGACY_BATTERY_SERVICES := true
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone20/temp"
 TW_EXCLUDE_TWRPAPP := true
 TW_EXCLUDE_APEX := true
+# lpdump/lpdumpd.rc are only pulled in because PRODUCT_USE_DYNAMIC_PARTITIONS
+# is true; TWRP/Fox handle super partitions with their own built-in liblp,
+# so the lpdump CLI is dead weight in the 20MB recovery partition.
+TW_EXCLUDE_LPDUMP := true
 TW_EXCLUDE_PYTHON := true
 TW_EXCLUDE_NANO := true
 TW_EXCLUDE_BASH := true
@@ -108,3 +112,8 @@ TW_EXCLUDE_TZDATA := true
 TW_EXCLUDE_SUPERSU := true
 TW_INCLUDE_CONFIGFS := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
+
+# Brightness (OrangeFox mandatory requirement)
+TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 160
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
